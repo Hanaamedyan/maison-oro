@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MAISON ORO — Interior Boutique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── TOKENS ───────────────────────────────────────────── */
+:root {
+  --cream:   #f3ece0;
+  --cream-2: #ede4d3;
+  --cream-3: #e6dac8;
+  --ink:     #1c1610;
+  --ink-2:   #3a3028;
+  --ink-3:   #6b5e50;
+  --gold:    #b8914a;
+  --gold-lt: #d4ad6a;
+  --white:   #faf7f2;
+  --border:  rgba(28,22,16,0.12);
+}
+
+/* ── RESET ───────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ── GRAIN OVERLAY ───────────────────────────────────── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:999;
+  opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+
+/* ── NAV ─────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  padding:22px 40px;
+  transition:background .5s,backdrop-filter .5s,padding .4s;
+}
+nav.scrolled{
+  background:rgba(243,236,224,0.88);
+  backdrop-filter:blur(16px);
+  padding:14px 40px;
+  border-bottom:1px solid var(--border);
+}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{
+  font-size:11px;font-weight:500;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--ink-3);
+  text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-logo{
+  text-align:center;
+  font-family:'Cormorant Garant',serif;
+  font-size:17px;font-weight:500;letter-spacing:6px;
+  text-transform:uppercase;color:var(--ink);
+  text-decoration:none;line-height:1.1;
+}
+.nav-logo em{display:block;font-style:italic;font-weight:300;letter-spacing:8px;color:var(--gold)}
+.nav-right{display:flex;justify-content:flex-end;gap:20px;align-items:center}
+.nav-right a{
+  font-size:11px;font-weight:500;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--ink-3);
+  text-decoration:none;transition:color .2s;
+}
+.nav-right a:hover{color:var(--ink)}
+.nav-bag{
+  width:32px;height:32px;border:1px solid var(--border);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-3);transition:border-color .2s,color .2s;
+}
+.nav-bag:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── HERO ─────────────────────────────────────────────── */
+#hero{
+  position:relative;height:100vh;min-height:680px;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;overflow:hidden;
+}
+.hero-img{
+  position:absolute;inset:0;
+  background:#d4c8b4;
+}
+.hero-img img{
+  width:100%;height:100%;object-fit:cover;
+  object-position:center 30%;
+  transform:scale(1.06);
+  animation:heroScale 14s cubic-bezier(.2,0,.1,1) forwards;
+}
+@keyframes heroScale{to{transform:scale(1)}}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(0deg,rgba(20,14,8,0.62) 0%,rgba(20,14,8,0.12) 55%,transparent 100%),
+    linear-gradient(180deg,rgba(20,14,8,0.18) 0%,transparent 25%);
+}
+.hero-body{
+  position:relative;z-index:2;
+  padding:0 48px 64px;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:40px;
+}
+.hero-title-block{
+  opacity:0;animation:fadeUp .9s ease .3s forwards;
+}
+.hero-issue{
+  font-size:11px;font-weight:500;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(243,236,224,0.55);
+  margin-bottom:18px;
+}
+.hero-title{
+  font-family:'Cormorant Garant',serif;
+  font-size:clamp(52px,7.5vw,110px);
+  font-weight:300;line-height:.93;
+  color:#faf7f2;letter-spacing:-1px;
+}
+.hero-title em{
+  font-style:italic;font-weight:300;
+  color:var(--gold-lt);display:block;
+}
+.hero-right{
+  max-width:340px;
+  opacity:0;animation:fadeUp .9s ease .55s forwards;
+  text-align:right;
+}
+.hero-tagline{
+  font-family:'Cormorant Garant',serif;
+  font-size:clamp(13px,1.4vw,16px);
+  font-weight:300;font-style:italic;
+  color:rgba(250,247,242,0.75);
+  line-height:1.7;margin-bottom:28px;
+}
+.hero-cta{
+  display:inline-block;
+  font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;
+  color:var(--ink);background:var(--cream);
+  padding:13px 28px;text-decoration:none;
+  border:none;cursor:pointer;
+  transition:background .2s,transform .2s;
+}
+.hero-cta:hover{background:var(--white);transform:translateY(-2px)}
+
+/* ── MARQUEE ─────────────────────────────────────────── */
+.marquee-wrap{
+  background:var(--ink);
+  padding:13px 0;overflow:hidden;white-space:nowrap;
+}
+.marquee-track{display:inline-flex;animation:marquee 22s linear infinite}
+.marquee-item{
+  font-family:'Cormorant Garant',serif;
+  font-size:14px;font-weight:400;
+  letter-spacing:4px;text-transform:uppercase;
+  color:rgba(243,236,224,0.5);padding:0 28px;
+}
+.marquee-item strong{color:var(--gold-lt);font-weight:400}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION COMMONS ─────────────────────────────────── */
+section{padding:100px 48px}
+.eyebrow{
+  font-size:10px;font-weight:500;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;
+}
+.eyebrow::before{content:'—';color:var(--gold)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── COLLECTION ──────────────────────────────────────── */
+#shop{background:var(--cream)}
+.shop-header{
+  display:flex;justify-content:space-between;
+  align-items:baseline;margin-bottom:56px;
+  border-bottom:1px solid var(--border);padding-bottom:20px;
+}
+.shop-counter{
+  font-size:11px;font-weight:500;letter-spacing:2px;
+  text-transform:uppercase;color:var(--ink-3);
+}
+.shop-title{
+  font-family:'Cormorant Garant',serif;
+  font-size:clamp(32px,4vw,52px);
+  font-weight:300;letter-spacing:2px;
+  text-transform:uppercase;
+}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.product-card{
+  position:relative;background:var(--cream-2);
+  cursor:pointer;overflow:hidden;
+  border:1px solid transparent;
+  transition:border-color .3s;
+}
+.product-card:hover{border-color:var(--border)}
+
+/* product photo */
+.prod-img{
+  position:relative;aspect-ratio:3/4;overflow:hidden;
+  background:var(--cream-3);
+}
+.prod-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .8s cubic-bezier(.16,1,.3,1);
+  display:block;
+}
+.product-card:hover .prod-img img{transform:scale(1.05)}
+.prod-badge{
+  position:absolute;top:16px;left:16px;
+  font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
+  background:var(--ink);color:var(--cream);
+  padding:5px 10px;
+}
+.prod-cat{
+  position:absolute;bottom:16px;right:16px;
+  font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
+  border:1px solid rgba(243,236,224,0.3);
+  color:rgba(243,236,224,0.7);padding:4px 10px;
+}
+
+/* product info */
+.prod-info{padding:22px 22px 26px}
+.prod-name{
+  font-family:'Cormorant Garant',serif;
+  font-size:20px;font-weight:400;letter-spacing:.5px;
+  margin-bottom:8px;
+  transition:color .2s;
+}
+.product-card:hover .prod-name{color:var(--gold)}
+.prod-price{
+  font-size:13px;font-weight:400;color:var(--ink-3);
+  letter-spacing:.5px;
+}
+.prod-price em{font-style:normal;color:var(--ink);font-size:15px}
+
+.prod-add{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 22px;
+  border-top:1px solid var(--border);
+  background:transparent;
+  transition:background .25s;
+}
+.product-card:hover .prod-add{background:var(--ink)}
+.prod-add-label{
+  font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--ink-3);transition:color .25s;
+}
+.product-card:hover .prod-add-label{color:var(--cream)}
+.prod-add-arrow{
+  color:var(--ink-3);transition:color .25s,transform .25s;
+}
+.product-card:hover .prod-add-arrow{color:var(--cream);transform:translate(3px,-3px)}
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.divider{
+  height:1px;background:var(--border);
+  margin:0 48px;
+}
+
+/* ── ABOUT ───────────────────────────────────────────── */
+#about{
+  background:var(--cream);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  padding:120px 48px;
+}
+.about-left .eyebrow{margin-bottom:28px}
+.about-headline{
+  font-family:'Cormorant Garant',serif;
+  font-size:clamp(40px,5.5vw,80px);
+  font-weight:300;line-height:.95;
+  letter-spacing:-1px;
+  margin-bottom:48px;
+}
+.about-headline em{font-style:italic;color:var(--gold)}
+.about-text{
+  font-size:15px;line-height:1.85;
+  color:var(--ink-3);max-width:420px;
+}
+.about-right{display:flex;flex-direction:column;gap:0}
+.stat-row{
+  padding:32px 0;border-top:1px solid var(--border);
+  display:flex;align-items:baseline;gap:20px;
+}
+.stat-row:last-child{border-bottom:1px solid var(--border)}
+.stat-num{
+  font-family:'Cormorant Garant',serif;
+  font-size:56px;font-weight:300;
+  line-height:1;color:var(--ink);
+  min-width:100px;
+}
+.stat-num em{font-style:italic;color:var(--gold)}
+.stat-label{
+  font-size:13px;font-weight:400;
+  color:var(--ink-3);line-height:1.5;
+  max-width:200px;
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer{
+  background:var(--ink);
+  padding:70px 48px 48px;
+}
+.footer-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding-bottom:52px;
+  border-bottom:1px solid rgba(243,236,224,0.1);
+  gap:40px;flex-wrap:wrap;
+}
+.footer-logo{
+  font-family:'Cormorant Garant',serif;
+  font-size:32px;font-weight:300;
+  letter-spacing:6px;text-transform:uppercase;
+  color:var(--cream);line-height:1.1;margin-bottom:20px;
+}
+.footer-logo em{
+  display:block;font-style:italic;
+  font-weight:300;color:var(--gold-lt);
+  font-size:28px;letter-spacing:8px;
+}
+.footer-address{
+  font-size:13px;color:rgba(243,236,224,0.45);
+  line-height:1.9;font-style:normal;
+}
+.footer-links{display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+.footer-link{
+  font-size:11px;font-weight:500;letter-spacing:2.5px;
+  text-transform:uppercase;color:rgba(243,236,224,0.4);
+  text-decoration:none;transition:color .2s;
+}
+.footer-link:hover{color:var(--gold-lt)}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:32px;flex-wrap:wrap;gap:16px;
+}
+.footer-copy{
+  font-size:12px;color:rgba(243,236,224,0.25);
+  letter-spacing:.5px;
+}
+.footer-made{
+  font-size:12px;color:rgba(243,236,224,0.2);
+  font-family:'Cormorant Garant',serif;
+  font-style:italic;letter-spacing:1px;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#">Ateliers</a></li>
+  </ul>
+  <a href="#" class="nav-logo">Maison<em>Oro</em></a>
+  <div class="nav-right">
+    <a href="#">Wishlist</a>
+    <a href="#" class="nav-bag" aria-label="Bag">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-img">
+    <img src="https://gilded-gallery-glow.lovable.app/assets/hero-room-Z33d8A5u.jpg" alt="A warm clay-walled living room with a curved bouclé sofa and travertine table"/>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-body">
+    <div class="hero-title-block">
+      <div class="hero-issue">Issue 014 — Autumn / Winter</div>
+      <h1 class="hero-title">
+        Rooms<br>that<br><em>hold you.</em>
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-tagline">A boutique of sculptural furniture, ceremonial lighting and quiet objects — made in small numbers, kept for longer.</p>
+      <a href="#shop" class="hero-cta">Shop the Collection</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Sculpted</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Slow</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Storied</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Sculpted</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Slow</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Storied</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Sculpted</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Slow</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Storied</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Sculpted</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Slow</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+    <span class="marquee-item">Storied</span>
+    <span class="marquee-item"><strong>✦</strong></span>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section id="shop">
+  <div class="shop-header reveal">
+    <div>
+      <div class="eyebrow">The Collection</div>
+      <h2 class="shop-title">Selected Pieces</h2>
+    </div>
+    <span class="shop-counter">Selected — 03 / 12</span>
+  </div>
+
+  <div class="products">
+
+    <!-- Vase -->
+    <div class="product-card reveal d1">
+      <div class="prod-img">
+        <img src="https://gilded-gallery-glow.lovable.app/assets/product-vase-BDQbvCHg.jpg" alt="Argilla Vase"/>
+        <span class="prod-badge">New</span>
+        <span class="prod-cat">Object</span>
+      </div>
+      <div class="prod-info">
+        <div class="prod-name">Argilla Vase</div>
+        <div class="prod-price"><em>€ 240</em></div>
+      </div>
+      <div class="prod-add">
+        <span class="prod-add-label">Add to bag</span>
+        <span class="prod-add-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- Chair -->
+    <div class="product-card reveal d2">
+      <div class="prod-img">
+        <img src="https://gilded-gallery-glow.lovable.app/assets/product-chair-C3enLzxc.jpg" alt="Luna Lounger"/>
+        <span class="prod-badge">New</span>
+        <span class="prod-cat">Seating</span>
+      </div>
+      <div class="prod-info">
+        <div class="prod-name">Luna Lounger</div>
+        <div class="prod-price"><em>€ 3,180</em></div>
+      </div>
+      <div class="prod-add">
+        <span class="prod-add-label">Add to bag</span>
+        <span class="prod-add-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- Lamp -->
+    <div class="product-card reveal d3">
+      <div class="prod-img">
+        <img src="https://gilded-gallery-glow.lovable.app/assets/product-lamp-CaXXK7ME.jpg" alt="Oro Table Lamp"/>
+        <span class="prod-badge">New</span>
+        <span class="prod-cat">Lighting</span>
+      </div>
+      <div class="prod-info">
+        <div class="prod-name">Oro Table Lamp</div>
+        <div class="prod-price"><em>€ 690</em></div>
+      </div>
+      <div class="prod-add">
+        <span class="prod-add-label">Add to bag</span>
+        <span class="prod-add-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left reveal">
+    <div class="eyebrow">The House</div>
+    <h2 class="about-headline">
+      Made by<br><em>hand.</em><br>Kept for<br>life.
+    </h2>
+    <p class="about-text">MAISON ORO is a small, opinionated boutique. Each piece is sourced from ateliers we visit in person — a ceramicist in Puglia, a brass-spinner outside Lyon, a weaver in Oaxaca. Nothing in our catalogue is mass produced. Most pieces ship in editions under one hundred.</p>
+  </div>
+  <div class="about-right reveal d2">
+    <div class="stat-row">
+      <div class="stat-num">06</div>
+      <div class="stat-label">Partner ateliers visited in person each year</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Made-to-order, never sitting in a warehouse</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-num"><em>∞</em></div>
+      <div class="stat-label">Repaired, never replaced — for as long as you own it</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Maison<em>Oro</em></div>
+      <address class="footer-address">
+        Via Solferino 12, Milano<br>
+        Open by appointment<br>
+        Tuesday through Saturday
+      </address>
+    </div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">@Maison.Oro</a>
+      <a href="#" class="footer-link">Newsletter</a>
+      <a href="#" class="footer-link">Ateliers</a>
+      <a href="#" class="footer-link">Repairs</a>
+      <a href="#" class="footer-link">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Maison Oro Srl.</p>
+    <p class="footer-made">Crafted in Milano · Shipped worldwide</p>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
